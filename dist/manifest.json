@@ -1,0 +1,37 @@
+{
+  "short_name": "周易占卜",
+  "name": "周易占卜 - 探索古老的智慧",
+  "description": "基于《易经》八卦理论的现代化占卜工具，提供完整的六十四卦占卜功能和历史记录管理。",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "categories": [
+    "lifestyle",
+    "utilities",
+    "entertainment"
+  ],
+  "lang": "zh-CN"
+}
