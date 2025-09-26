@@ -1,46 +1,206 @@
-# Getting Started with Create React App
+# 周易占卜应用
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+一个基于 React + TypeScript + Ant Design 的现代化周易占卜应用，提供完整的六十四卦占卜功能和历史记录管理。
 
-## Available Scripts
+## ✨ 功能特性
 
-In the project directory, you can run:
+### 🔮 核心占卜功能
 
-### `yarn start`
+- **数字占卜**：输入三个三位数（100-999），系统自动计算对应的卦象
+- **八卦计算**：基于《易经》八卦理论，准确计算上下卦和变爻
+- **六十四卦**：完整的六十四卦信息库，包含卦辞、解释和建议
+- **随机生成**：支持随机生成占卜数字，增加占卜的神秘感
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 📊 结果展示
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **详细信息**：显示下卦、上卦、变爻等完整信息
+- **卦象解释**：提供专业的卦象含义和人生指导
+- **可视化展示**：使用标签和卡片优雅展示占卜结果
+- **详细信息**：可展开查看卦辞、卦象含义和建议
 
-### `yarn test`
+### 📚 历史管理
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **自动保存**：占卜结果自动保存到本地存储
+- **历史查看**：方便查看和管理历史占卜记录
+- **记录管理**：支持删除单条记录或清空所有历史
+- **时间标记**：每条记录都有详细的时间戳
 
-### `yarn build`
+### 🎨 用户体验
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **现代化 UI**：采用 Ant Design 组件库，界面美观现代
+- **响应式设计**：完美适配桌面端和移动端
+- **渐变背景**：优雅的渐变背景设计
+- **交互反馈**：丰富的动画效果和用户反馈
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 📖 帮助系统
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **使用说明**：详细的使用指南和占卜原理说明
+- **八卦对照**：完整的八卦符号和含义对照表
+- **使用建议**：专业的占卜使用建议和注意事项
 
-### `yarn eject`
+## 🚀 技术栈
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **前端框架**：React 18 + TypeScript
+- **UI 组件库**：Ant Design 5.x
+- **构建工具**：CRACO (Create React App Configuration Override)
+- **样式方案**：CSS + Ant Design 主题
+- **状态管理**：React Hooks
+- **本地存储**：LocalStorage API
+- **部署平台**：GitHub Pages
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📦 安装和运行
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 环境要求
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Node.js >= 16.0.0
+- npm >= 8.0.0 或 yarn >= 1.22.0
 
-## Learn More
+### 安装依赖
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+# 使用 npm
+npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# 或使用 yarn
+yarn install
+```
+
+### 开发模式
+
+```bash
+# 使用 npm
+npm start
+
+# 或使用 yarn
+yarn start
+```
+
+应用将在 [http://localhost:3000](http://localhost:3000) 启动
+
+### 构建生产版本
+
+```bash
+# 使用 npm
+npm run build
+
+# 或使用 yarn
+yarn build
+```
+
+### 部署到 GitHub Pages
+
+```bash
+# 使用 npm
+npm run deploy
+
+# 或使用 yarn
+yarn deploy
+```
+
+## 🎯 使用指南
+
+### 基本占卜流程
+
+1. **输入数字**：在表单中输入三个 100-999 之间的数字
+
+   - 下卦数字：决定下卦（内卦）
+   - 上卦数字：决定上卦（外卦）
+   - 变爻数字：决定变爻位置
+
+2. **开始占卜**：点击"开始占卜"按钮，系统将自动计算卦象
+
+3. **查看结果**：在右侧查看详细的占卜结果，包括：
+
+   - 卦象名称和基本信息
+   - 下卦、上卦、变爻信息
+   - 卦象解释和人生指导
+   - 详细的卦辞和建议
+
+4. **管理历史**：在历史记录中查看和管理之前的占卜记录
+
+### 占卜原理
+
+周易占卜基于《易经》的八卦理论：
+
+- **八卦**：乾、兑、离、震、巽、坎、艮、坤
+- **计算方式**：数字除以 8 取余数确定八卦，除以 6 取余数确定变爻
+- **六十四卦**：由上下两个八卦组合而成，共 64 种组合
+
+### 使用建议
+
+- 占卜前保持心境平和，专注于要询问的问题
+- 数字可以随机生成，也可以根据个人喜好选择
+- 占卜结果仅供参考，重要的决策还需理性思考
+- 可以保存历史记录，方便回顾和对比
+
+## 📁 项目结构
+
+```text
+src/
+├── components/          # 通用组件
+├── pages/              # 页面组件
+│   └── main/          # 主页面
+├── data/              # 数据文件
+│   └── consts.ts      # 八卦和六十四卦数据
+├── types/             # TypeScript类型定义
+│   └── index.ts      # 类型声明
+├── utils/             # 工具函数
+│   ├── divination.ts  # 占卜计算逻辑
+│   └── storage.ts     # 本地存储管理
+├── App.tsx           # 主应用组件
+├── App.css           # 主样式文件
+└── index.tsx         # 应用入口
+```
+
+## 🎨 设计特色
+
+### 视觉设计
+
+- **渐变背景**：使用紫色渐变背景，营造神秘感
+- **毛玻璃效果**：主容器采用半透明毛玻璃效果
+- **卡片布局**：使用 Ant Design 卡片组件，层次分明
+- **色彩搭配**：蓝色、绿色、橙色标签区分不同信息
+
+### 交互设计
+
+- **响应式布局**：桌面端双栏布局，移动端单栏布局
+- **动画效果**：悬停效果和过渡动画
+- **反馈机制**：加载状态、成功提示、错误提示
+- **模态弹窗**：帮助说明使用模态弹窗展示
+
+## 🔧 开发说明
+
+### 代码规范
+
+- 使用 TypeScript 进行类型检查
+- 遵循 React Hooks 最佳实践
+- 采用函数式组件和函数式编程
+- 使用 ESLint 进行代码检查
+
+### 扩展功能
+
+项目采用模块化设计，易于扩展：
+
+- 可以轻松添加更多卦象信息
+- 支持添加更多占卜方法
+- 可以集成后端 API
+- 支持多语言国际化
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request 来帮助改进这个项目！
+
+## 📞 联系方式
+
+如有问题或建议，请通过以下方式联系：
+
+- 项目 Issues：[GitHub Issues](https://github.com/your-username/yi/issues)
+- 邮箱：<your-email@example.com>
+
+---
+
+**注意**：本应用仅供学习和娱乐使用，占卜结果不应作为重要决策的唯一依据。

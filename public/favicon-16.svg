@@ -1,0 +1,37 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="yin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="yang" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a202c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景圆形 -->
+  <circle cx="8" cy="8" r="7.5" fill="url(#bg)" stroke="#5a67d8" stroke-width="0.3"/>
+  
+  <!-- 太极图 -->
+  <g transform="translate(8,8)">
+    <!-- 大圆 -->
+    <circle cx="0" cy="0" r="6.5" fill="url(#yin)" stroke="url(#yang)" stroke-width="0.2"/>
+    
+    <!-- 阳鱼 -->
+    <path d="M 0,-6.5 A 6.5,6.5 0 0,1 0,6.5 A 3.25,3.25 0 0,0 0,0 Z" fill="url(#yang)"/>
+    
+    <!-- 阴鱼 -->
+    <path d="M 0,6.5 A 6.5,6.5 0 0,1 0,-6.5 A 3.25,3.25 0 0,0 0,0 Z" fill="url(#yin)"/>
+    
+    <!-- 阳鱼眼 -->
+    <circle cx="0" cy="-3.25" r="0.9" fill="url(#yin)"/>
+    
+    <!-- 阴鱼眼 -->
+    <circle cx="0" cy="3.25" r="0.9" fill="url(#yang)"/>
+  </g>
+</svg>
