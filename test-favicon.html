@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试图标</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-16.svg" type="image/svg+xml" sizes="16x16">
+  <link rel="icon" href="favicon.ico">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .icon-test {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      align-items: center;
+    }
+
+    .icon-test img {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: white;
+      padding: 10px;
+    }
+
+    .instructions {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .instructions h3 {
+      margin-top: 0;
+      color: #ffd700;
+    }
+
+    .instructions ol {
+      line-height: 1.6;
+    }
+
+    .instructions li {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🎯 周易占卜应用 - 图标测试页面</h1>
+
+    <div class="icon-test">
+      <div>
+        <h3>32x32 主图标</h3>
+        <img src="favicon.svg" alt="主图标" width="32" height="32">
+      </div>
+      <div>
+        <h3>16x16 小图标</h3>
+        <img src="favicon-16.svg" alt="小图标" width="16" height="16">
+      </div>
+      <div>
+        <h3>传统 ICO</h3>
+        <img src="favicon.ico" alt="ICO图标" width="16" height="16">
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h3>🔧 如果浏览器标签页仍显示旧图标，请尝试以下方法：</h3>
+      <ol>
+        <li><strong>强制刷新页面</strong>：按 <code>Ctrl + F5</code> (Windows) 或 <code>Cmd + Shift + R</code> (Mac)</li>
+        <li><strong>清除浏览器缓存</strong>：
+          <ul>
+            <li>Chrome: 按 <code>F12</code> 打开开发者工具 → 右键刷新按钮 → 选择"清空缓存并硬性重新加载"</li>
+            <li>Firefox: 按 <code>Ctrl + Shift + Delete</code> → 选择"缓存" → 立即清除</li>
+            <li>Safari: 按 <code>Cmd + Option + E</code> 清空缓存</li>
+          </ul>
+        </li>
+        <li><strong>重启浏览器</strong>：完全关闭浏览器后重新打开</li>
+        <li><strong>检查图标文件</strong>：确保 <code>favicon.svg</code> 文件存在且可访问</li>
+        <li><strong>使用无痕模式</strong>：在无痕/隐私模式下打开页面测试</li>
+      </ol>
+    </div>
+
+    <div class="instructions">
+      <h3>📱 移动端测试</h3>
+      <p>在手机浏览器中，图标会显示在：</p>
+      <ul>
+        <li>浏览器标签页</li>
+        <li>书签列表</li>
+        <li>添加到主屏幕时</li>
+        <li>PWA安装后</li>
+      </ul>
+    </div>
+
+    <div class="instructions">
+      <h3>🎨 图标设计说明</h3>
+      <p>我们的图标采用太极图设计，体现了《易经》的阴阳哲学：</p>
+      <ul>
+        <li>紫色渐变背景与应用主题色一致</li>
+        <li>黑白阴阳鱼象征对立统一</li>
+        <li>八卦符号装饰增强文化内涵</li>
+        <li>SVG格式支持任意缩放</li>
+      </ul>
+    </div>
+
+    <p style="text-align: center; margin-top: 30px;">
+      <a href="/" style="color: #ffd700; text-decoration: none; font-size: 18px;">
+        ← 返回主应用
+      </a>
+    </p>
+  </div>
+</body>
+
+</html>
