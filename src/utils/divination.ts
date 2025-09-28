@@ -86,16 +86,16 @@ export const validateInput = (
 ): { isValid: boolean; errors: string[] } => {
   const errors: string[] = []
 
-  if (!input.lowerNumber || input.lowerNumber < 1) {
-    errors.push('下卦数字必须大于0')
+  if (!input.lowerNumber || input.lowerNumber < 100 || input.lowerNumber > 999) {
+    errors.push('下卦数字必须在100-999之间')
   }
 
-  if (!input.upperNumber || input.upperNumber < 1) {
-    errors.push('上卦数字必须大于0')
+  if (!input.upperNumber || input.upperNumber < 100 || input.upperNumber > 999) {
+    errors.push('上卦数字必须在100-999之间')
   }
 
-  if (!input.changeNumber || input.changeNumber < 1) {
-    errors.push('变爻数字必须大于0')
+  if (!input.changeNumber || input.changeNumber < 100 || input.changeNumber > 999) {
+    errors.push('变爻数字必须在100-999之间')
   }
 
   return {
