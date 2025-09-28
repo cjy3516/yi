@@ -4,7 +4,7 @@ import {
   eightTrigramsMeaning,
   eightTrigramsGroupToHexagrams,
   hexagramsInfo,
-  changeLineInterpretations,
+  hexagramChangeLines,
 } from '../data/consts'
 
 /**
@@ -50,11 +50,23 @@ export const calculateDivination = (
 
   // 获取卦象详细信息
   const hexagramInfo = hexagramsInfo[hexagramName]
-  const changeLineInfo = changeLineInterpretations[actualChangeLine]
+  
+  // 获取变爻解释 - 优先使用特定卦象的爻辞，如果没有则使用通用解释
+  let changeLineInfo = '';
+  
+  // 尝试直接通过卦名获取特定卦象的爻辞
+  const specificChangeLineInfo = hexagramChangeLines[hexagramName]?.[actualChangeLine];
+  
+  if (specificChangeLineInfo) {
+    changeLineInfo = `${specificChangeLineInfo.text}。${specificChangeLineInfo.interpretation}`;
+  } else {
+    // 使用通用爻辞解释
+    changeLineInfo = getGeneralChangeLineInterpretation(actualChangeLine);
+  }
 
   // 生成解释
   const interpretation = hexagramInfo
-    ? `${hexagramInfo.interpretation} ${changeLineInfo}`
+    ? `${hexagramInfo.interpretation} 变爻：${actualChangeLine}。${changeLineInfo}`
     : `下卦：${lowerTrigram}(${lowerMeaning})，上卦：${upperTrigram}(${upperMeaning})，合起来是：${hexagramName}，变爻：${actualChangeLine}。${changeLineInfo}`
 
   return {
@@ -67,6 +79,24 @@ export const calculateDivination = (
     changeLine: actualChangeLine,
     interpretation,
   }
+}
+
+/**
+ * 获取通用爻辞解释
+ * @param changeLine 变爻位置 (1-6)
+ * @returns 爻辞解释
+ */
+const getGeneralChangeLineInterpretation = (changeLine: number): string => {
+  const interpretations: { [key: number]: string } = {
+    1: '初爻动，宜谨慎观察，不宜妄动。',
+    2: '二爻动，处于中间位置，宜保持平衡。',
+    3: '三爻动，处于变化关键期，需要做出选择。',
+    4: '四爻动，接近高位，宜谨慎前进。',
+    5: '五爻动，处于最佳位置，可以积极行动。',
+    6: '上爻动，已达极点，宜知进退。'
+  };
+  
+  return interpretations[changeLine] || '变爻解释暂无。';
 }
 
 /**
