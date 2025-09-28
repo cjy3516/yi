@@ -24,6 +24,18 @@ export const eightTrigramsMeaning: { [key: string]: string } = {
   坤: '地',
 }
 
+// 八卦线条映射 (1为阳爻——，0为阴爻- -)
+export const trigramLines: { [key: string]: number[] } = {
+  乾: [1, 1, 1], // 天 (三阳)
+  兑: [0, 1, 1], // 泽 (上阴下二阳)
+  离: [1, 0, 1], // 火 (中阴)
+  震: [0, 0, 1], // 雷 (下阳上二阴)
+  巽: [1, 1, 0], // 风 (上阴下二阳)
+  坎: [0, 1, 0], // 水 (中阳)
+  艮: [1, 0, 0], // 山 (上阳下二阴)
+  坤: [0, 0, 0], // 地 (三阴)
+}
+
 // 八卦组合到卦象的映射
 export const eightTrigramsGroupToHexagrams: { [key: string]: string } = {
   乾为: '天',

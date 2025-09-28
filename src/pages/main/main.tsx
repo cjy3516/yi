@@ -30,6 +30,8 @@ import {
 } from '../../utils/divination'
 import { LocalStorageManager } from '../../utils/storage'
 import { trigramsInfo, hexagramsInfo } from '../../data/consts'
+import { HexagramDiagram } from '../../components/HexagramDiagram'
+import { ChangeLineInfo } from '../../components/ChangeLineInfo'
 
 const { Title, Text, Paragraph } = Typography
 const { Panel } = Collapse
@@ -286,7 +288,7 @@ export const Main = () => {
                   {/* 详细信息 */}
                   {hexagramsInfo[result.hexagram] && (
                     <Collapse>
-                      <Panel header="详细信息" key="1">
+                      <Panel header="卦象详细信息" key="1">
                         <Space direction="vertical" style={{ width: '100%' }}>
                           <div>
                             <Text strong>卦辞：</Text>
@@ -321,6 +323,36 @@ export const Main = () => {
           </Card>
         </Col>
       </Row>
+
+      {/* 卦象展示和爻辞详解 */}
+      {result && (
+        <div className="hexagram-section">
+          <Row gutter={[24, 24]}>
+            {/* 卦象图示 */}
+            <Col xs={24} md={10} lg={8}>
+              <div className="hexagram-diagram-container">
+                <HexagramDiagram
+                  lowerTrigram={result.lowerTrigram}
+                  upperTrigram={result.upperTrigram}
+                  changeLine={result.changeLine}
+                  size={280}
+                  showLabels={true}
+                />
+              </div>
+            </Col>
+
+            {/* 爻辞详解 */}
+            <Col xs={24} md={14} lg={16}>
+              <div className="change-line-info-container">
+                <ChangeLineInfo
+                  hexagramName={result.hexagram}
+                  changeLine={result.changeLine}
+                />
+              </div>
+            </Col>
+          </Row>
+        </div>
+      )}
 
       {/* 历史记录 */}
       {history.length > 0 && (
