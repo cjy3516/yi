@@ -56,6 +56,17 @@
   transition: all 0.3s ease;
 }
 
+/* 修复历史记录中小卦象的显示 */
+.history-item .mini-hexagram {
+  margin: 4px 0;
+}
+
+/* 修复历史记录中文案的显示 */
+.history-item .ant-typography {
+  word-break: break-word !important;
+  white-space: pre-wrap !important;
+}
+
 .history-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
@@ -85,18 +96,14 @@
 .hexagram-diagram {
   background: linear-gradient(145deg, #ffffff, #f0f0f0);
   border-radius: 12px;
-  box-shadow: 
-    inset 5px 5px 10px #d0d0d0,
-    inset -5px -5px 10px #ffffff,
+  box-shadow: inset 5px 5px 10px #d0d0d0, inset -5px -5px 10px #ffffff,
     0 10px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
 .hexagram-diagram:hover {
   transform: translateY(-2px);
-  box-shadow: 
-    inset 5px 5px 10px #d0d0d0,
-    inset -5px -5px 10px #ffffff,
+  box-shadow: inset 5px 5px 10px #d0d0d0, inset -5px -5px 10px #ffffff,
     0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -114,7 +121,8 @@
 }
 
 @keyframes highlightPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scaleY(1);
   }

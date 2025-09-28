@@ -29,9 +29,16 @@ import {
   formatTime,
 } from '../../utils/divination'
 import { LocalStorageManager } from '../../utils/storage'
-import { trigramsInfo, hexagramsInfo } from '../../data/consts'
+import {
+  trigramsInfo,
+  hexagramsInfo,
+  hexagramChangeLines,
+} from '../../data/consts'
 import { HexagramDiagram } from '../../components/HexagramDiagram'
 import { ChangeLineInfo } from '../../components/ChangeLineInfo'
+import { MiniHexagramDiagram } from '../../components/MiniHexagramDiagram'
+import { getChangeLineAnalysis } from '../../utils/changeLineUtils'
+import { generateHistoryDescription } from '../../utils/historyUtils'
 
 const { Title, Text, Paragraph } = Typography
 const { Panel } = Collapse
@@ -249,7 +256,7 @@ export const Main = () => {
                   style={{ width: '100%' }}>
                   {/* 基本信息 */}
                   <div>
-                    <Title level={4} style={{ marginBottom: 16 }}>
+                    <Title level={3} className="hexagram-title">
                       {result.hexagram}卦
                     </Title>
                     <Row gutter={16}>
@@ -279,36 +286,198 @@ export const Main = () => {
 
                   <Divider />
 
-                  {/* 卦象解释 */}
-                  <div>
-                    <Title level={5}>卦象解释</Title>
-                    <Paragraph>{result.interpretation}</Paragraph>
-                  </div>
+                  {/* 卦象解释 - 重新设计 */}
+                  {hexagramsInfo[result.hexagram] ? (
+                    <Space
+                      direction="vertical"
+                      size="middle"
+                      style={{ width: '100%' }}>
+                      {/* 卦辞区域 */}
+                      <div
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #fff7e6, #fff2d3)',
+                          padding: '16px 20px',
+                          borderRadius: '12px',
+                          borderLeft: '4px solid #faad14',
+                        }}>
+                        <Title
+                          level={5}
+                          style={{ margin: '0 0 8px 0', color: '#d48806' }}>
+                          📜 卦辞
+                        </Title>
+                        <Text
+                          style={{
+                            fontSize: '16px',
+                            fontWeight: 500,
+                            color: '#2d3748',
+                          }}>
+                          「{hexagramsInfo[result.hexagram].description}」
+                        </Text>
+                      </div>
 
-                  {/* 详细信息 */}
-                  {hexagramsInfo[result.hexagram] && (
-                    <Collapse>
-                      <Panel header="卦象详细信息" key="1">
-                        <Space direction="vertical" style={{ width: '100%' }}>
-                          <div>
-                            <Text strong>卦辞：</Text>
-                            <Text>
-                              {hexagramsInfo[result.hexagram].description}
-                            </Text>
-                          </div>
-                          <div>
-                            <Text strong>卦象含义：</Text>
-                            <Text>
-                              {hexagramsInfo[result.hexagram].interpretation}
-                            </Text>
-                          </div>
-                          <div>
-                            <Text strong>建议：</Text>
-                            <Text>{hexagramsInfo[result.hexagram].advice}</Text>
-                          </div>
-                        </Space>
-                      </Panel>
-                    </Collapse>
+                      {/* 卦象含义区域 */}
+                      <div
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #f6ffed, #f0f9e7)',
+                          padding: '16px 20px',
+                          borderRadius: '12px',
+                          borderLeft: '4px solid #52c41a',
+                        }}>
+                        <Title
+                          level={5}
+                          style={{ margin: '0 0 12px 0', color: '#389e0d' }}>
+                          🔮 卦象含义
+                        </Title>
+                        <Paragraph
+                          style={{
+                            margin: 0,
+                            fontSize: '14px',
+                            lineHeight: '1.6',
+                            color: '#2d3748',
+                          }}>
+                          {hexagramsInfo[result.hexagram].interpretation}
+                        </Paragraph>
+                      </div>
+
+                      {/* 建议区域 */}
+                      <div
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #e6f7ff, #d4edda)',
+                          padding: '16px 20px',
+                          borderRadius: '12px',
+                          borderLeft: '4px solid #1890ff',
+                        }}>
+                        <Title
+                          level={5}
+                          style={{ margin: '0 0 12px 0', color: '#096dd9' }}>
+                          💡 人生指导
+                        </Title>
+                        <Paragraph
+                          style={{
+                            margin: 0,
+                            fontSize: '14px',
+                            lineHeight: '1.6',
+                            color: '#2d3748',
+                          }}>
+                          {hexagramsInfo[result.hexagram].advice}
+                        </Paragraph>
+                      </div>
+
+                      {/* 变爻特别提示 */}
+                      <div
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #fff0f6, #ffeef2)',
+                          padding: '16px 20px',
+                          borderRadius: '12px',
+                          borderLeft: '4px solid #eb2f96',
+                        }}>
+                        <Title
+                          level={5}
+                          style={{ margin: '0 0 12px 0', color: '#c41d7f' }}>
+                          ⚡ 变爻详解
+                        </Title>
+                        {(() => {
+                          const analysis = getChangeLineAnalysis(
+                            result.changeLine,
+                            result.hexagram,
+                            hexagramChangeLines
+                          )
+
+                          return (
+                            <Space
+                              direction="vertical"
+                              size="middle"
+                              style={{ width: '100%' }}>
+                              {/* 具体爻辞 */}
+                              {analysis.hasSpecificInfo && (
+                                <div>
+                                  <Text
+                                    style={{
+                                      fontSize: '15px',
+                                      fontWeight: 600,
+                                      color: '#c41d7f',
+                                    }}>
+                                    📖 {analysis.specificLine.text}
+                                  </Text>
+                                  <br />
+                                  <Text
+                                    style={{
+                                      fontSize: '13px',
+                                      color: '#666',
+                                      lineHeight: '1.5',
+                                    }}>
+                                    {analysis.specificLine.interpretation}
+                                  </Text>
+                                </div>
+                              )}
+
+                              {/* 位置含义 */}
+                              <div>
+                                <Text
+                                  style={{
+                                    fontSize: '14px',
+                                    color: '#2d3748',
+                                    lineHeight: '1.6',
+                                  }}>
+                                  🎯 <strong>位置含义：</strong>
+                                  {analysis.positionMeaning}
+                                </Text>
+                              </div>
+
+                              {/* 吉凶倾向 */}
+                              <div
+                                style={{
+                                  padding: '8px 12px',
+                                  background:
+                                    analysis.tendency.type === 'positive'
+                                      ? 'rgba(82, 196, 26, 0.1)'
+                                      : analysis.tendency.type === 'negative'
+                                      ? 'rgba(255, 77, 79, 0.1)'
+                                      : 'rgba(250, 173, 20, 0.1)',
+                                  borderRadius: '6px',
+                                  border: `1px solid ${
+                                    analysis.tendency.type === 'positive'
+                                      ? '#b7eb8f'
+                                      : analysis.tendency.type === 'negative'
+                                      ? '#ffccc7'
+                                      : '#ffe7ba'
+                                  }`,
+                                }}>
+                                <Text
+                                  style={{ fontSize: '13px', fontWeight: 500 }}>
+                                  {analysis.tendency.type === 'positive'
+                                    ? '✅'
+                                    : analysis.tendency.type === 'negative'
+                                    ? '⚠️'
+                                    : '⚖️'}
+                                  <strong> 趋势分析：</strong>
+                                  {analysis.tendency.description}
+                                </Text>
+                              </div>
+                            </Space>
+                          )
+                        })()}
+                      </div>
+                    </Space>
+                  ) : (
+                    <div
+                      style={{
+                        background: '#f9f9f9',
+                        padding: '16px 20px',
+                        borderRadius: '12px',
+                        textAlign: 'center',
+                      }}>
+                      <Title level={5} style={{ color: '#666' }}>
+                        卦象解释
+                      </Title>
+                      <Paragraph style={{ color: '#666', margin: 0 }}>
+                        {result.interpretation}
+                      </Paragraph>
+                    </div>
                   )}
                 </Space>
               </div>
@@ -327,7 +496,7 @@ export const Main = () => {
       {/* 卦象展示和爻辞详解 */}
       {result && (
         <div className="hexagram-section">
-          <Row gutter={[24, 24]}>
+          <Row gutter={[24, 24]} align="top">
             {/* 卦象图示 */}
             <Col xs={24} md={10} lg={8}>
               <div className="hexagram-diagram-container">
@@ -347,6 +516,8 @@ export const Main = () => {
                 <ChangeLineInfo
                   hexagramName={result.hexagram}
                   changeLine={result.changeLine}
+                  lowerTrigram={result.lowerTrigram}
+                  upperTrigram={result.upperTrigram}
                 />
               </div>
             </Col>
@@ -372,35 +543,60 @@ export const Main = () => {
           style={{ marginTop: 24 }}>
           <List
             dataSource={history}
+            split={false}
             renderItem={(item) => (
-              <List.Item
-                className="history-item"
-                actions={[
-                  <Button
-                    type="text"
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => deleteResult(item.id)}>
-                    删除
-                  </Button>,
-                ]}>
-                <List.Item.Meta
-                  title={
-                    <Space>
-                      <Text strong>{item.hexagram}卦</Text>
-                      <Tag color="blue">{item.lowerTrigram}</Tag>
-                      <Tag color="green">{item.upperTrigram}</Tag>
-                      <Tag color="orange">第{item.changeLine}爻</Tag>
-                    </Space>
-                  }
-                  description={
-                    <Space direction="vertical" size="small">
-                      <Text type="secondary">{formatTime(item.timestamp)}</Text>
-                      <Text ellipsis>{item.interpretation}</Text>
-                    </Space>
-                  }
-                />
-              </List.Item>
+              <div className="history-item">
+                <List.Item
+                  actions={[
+                    <Button
+                      type="text"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => deleteResult(item.id)}>
+                      删除
+                    </Button>,
+                  ]}
+                  style={{ padding: 0, border: 'none' }}>
+                  <List.Item.Meta
+                    avatar={
+                      <MiniHexagramDiagram
+                        lowerTrigram={item.lowerTrigram}
+                        upperTrigram={item.upperTrigram}
+                        changeLine={item.changeLine}
+                        size={48}
+                      />
+                    }
+                    title={
+                      <Space>
+                        <Text strong>{item.hexagram}卦</Text>
+                        <Tag color="blue">{item.lowerTrigram}</Tag>
+                        <Tag color="green">{item.upperTrigram}</Tag>
+                        <Tag color="orange">第{item.changeLine}爻</Tag>
+                      </Space>
+                    }
+                    description={
+                      <Space
+                        direction="vertical"
+                        size="small"
+                        style={{ width: '100%' }}>
+                        <Text type="secondary">
+                          {formatTime(item.timestamp)}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: '13px',
+                            lineHeight: '1.6',
+                            whiteSpace: 'pre-line',
+                            wordBreak: 'break-word',
+                            display: 'block',
+                          }}>
+                          {generateHistoryDescription(item)}
+                        </Text>
+                      </Space>
+                    }
+                  />
+                </List.Item>
+              </div>
             )}
           />
         </Card>

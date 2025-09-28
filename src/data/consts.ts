@@ -24,16 +24,16 @@ export const eightTrigramsMeaning: { [key: string]: string } = {
   坤: '地',
 }
 
-// 八卦线条映射 (1为阳爻——，0为阴爻- -)
+// 八卦线条映射 (1为阳爻——，0为阴爻- -)，数组从下到上排列
 export const trigramLines: { [key: string]: number[] } = {
-  乾: [1, 1, 1], // 天 (三阳)
-  兑: [0, 1, 1], // 泽 (上阴下二阳)
-  离: [1, 0, 1], // 火 (中阴)
-  震: [0, 0, 1], // 雷 (下阳上二阴)
-  巽: [1, 1, 0], // 风 (上阴下二阳)
-  坎: [0, 1, 0], // 水 (中阳)
-  艮: [1, 0, 0], // 山 (上阳下二阴)
-  坤: [0, 0, 0], // 地 (三阴)
+  乾: [1, 1, 1], // 天 (三阳爻)
+  兑: [1, 1, 0], // 泽 (下二阳上一阴)
+  离: [1, 0, 1], // 火 (下阳中阴上阳)
+  震: [1, 0, 0], // 雷 (下阳上二阴)
+  巽: [0, 1, 1], // 风 (下阴上二阳)
+  坎: [0, 1, 0], // 水 (下阴中阳上阴)
+  艮: [0, 0, 1], // 山 (下二阴上阳)
+  坤: [0, 0, 0], // 地 (三阴爻)
 }
 
 // 八卦组合到卦象的映射
@@ -846,7 +846,7 @@ export const hexagramChangeLines: {
   }
 } = {
   // 第1卦：乾
-  乾: {
+  天: {
     1: {
       text: '潜龙勿用',
       interpretation: '初九：潜龙勿用。表示时机未到，应当韬光养晦，不可妄动。',
@@ -879,7 +879,7 @@ export const hexagramChangeLines: {
   },
 
   // 第2卦：坤
-  坤: {
+  地: {
     1: {
       text: '履霜，坚冰至',
       interpretation:
@@ -1718,7 +1718,7 @@ export const hexagramChangeLines: {
   },
 
   // 第29卦：坎
-  坎: {
+  水: {
     1: {
       text: '习坎，入于坎窞，凶',
       interpretation: '初六：习坎，入于坎窞，凶。表示习坎，入于坎窞，凶险。',
@@ -1749,7 +1749,7 @@ export const hexagramChangeLines: {
   },
 
   // 第30卦：离
-  离: {
+  火: {
     1: {
       text: '履错然，敬之，无咎',
       interpretation: '初九：履错然，敬之，无咎。表示履错然，敬之，无咎。',
@@ -2424,7 +2424,7 @@ export const hexagramChangeLines: {
   },
 
   // 第51卦：震
-  震: {
+  雷: {
     1: {
       text: '震来虩虩，后笑言哑哑，吉',
       interpretation:
@@ -2456,7 +2456,7 @@ export const hexagramChangeLines: {
   },
 
   // 第52卦：艮
-  艮: {
+  山: {
     1: {
       text: '艮其趾，无咎，利永贞',
       interpretation:
@@ -2623,7 +2623,7 @@ export const hexagramChangeLines: {
   },
 
   // 第57卦：巽
-  巽: {
+  风: {
     1: {
       text: '进退，利武人之贞',
       interpretation: '初六：进退，利武人之贞。表示进退不定，利于武人的坚持。',
@@ -2654,7 +2654,7 @@ export const hexagramChangeLines: {
   },
 
   // 第58卦：兑
-  兑: {
+  泽: {
     1: {
       text: '和兑，吉',
       interpretation: '初九：和兑，吉。表示和悦喜悦，吉祥。',
