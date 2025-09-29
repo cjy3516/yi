@@ -38,7 +38,12 @@ import { HexagramDiagram } from '../../components/HexagramDiagram'
 import { ChangeLineInfo } from '../../components/ChangeLineInfo'
 import { MiniHexagramDiagram } from '../../components/MiniHexagramDiagram'
 import { getChangeLineAnalysis } from '../../utils/changeLineUtils'
-import { generateHistoryDescription } from '../../utils/historyUtils'
+import {
+  generateHistoryDescription,
+  exportHistoryAsJSON,
+  exportHistoryAsCSV,
+} from '../../utils/historyUtils'
+import { trackEvent } from '../../utils/analytics'
 
 const { Title, Text, Paragraph } = Typography
 const { Panel } = Collapse
@@ -54,6 +59,7 @@ export const Main = () => {
   useEffect(() => {
     const savedHistory = LocalStorageManager.getHistory()
     setHistory(savedHistory.results)
+    trackEvent('HistoryLoaded', { count: savedHistory.results.length })
   }, [])
 
   // 计算占卜
@@ -70,6 +76,7 @@ export const Main = () => {
       // 验证输入
       const validation = validateInput(input)
       if (!validation.isValid) {
+        trackEvent('ValidationFailed', { reason: validation.errors.join('|') })
         message.error(validation.errors.join('，'))
         return
       }
@@ -84,6 +91,10 @@ export const Main = () => {
       // 更新历史记录状态
       const updatedHistory = LocalStorageManager.getHistory()
       setHistory(updatedHistory.results)
+      trackEvent('DivinationCompleted', {
+        hexagram: divinationResult.hexagram,
+        changeLine: String(divinationResult.changeLine),
+      })
 
       message.success('占卜完成！')
     } catch (error) {
@@ -107,6 +118,7 @@ export const Main = () => {
       onOk() {
         LocalStorageManager.clearHistory()
         setHistory([])
+        trackEvent('HistoryCleared')
         message.success('历史记录已清空')
       },
     })
@@ -117,6 +129,7 @@ export const Main = () => {
     LocalStorageManager.deleteResult(id)
     const updatedHistory = LocalStorageManager.getHistory()
     setHistory(updatedHistory.results)
+    trackEvent('HistoryDeleted')
     message.success('记录已删除')
   }
 
@@ -133,6 +146,7 @@ export const Main = () => {
     })
 
     message.info('已生成随机数字')
+    trackEvent('RandomGenerated')
   }
 
   return (
@@ -147,7 +161,10 @@ export const Main = () => {
           <Button
             type="link"
             icon={<QuestionCircleOutlined />}
-            onClick={() => setHelpVisible(true)}>
+            onClick={() => {
+              setHelpVisible(true)
+              trackEvent('HelpOpened')
+            }}>
             详细说明
           </Button>
         </Space>
@@ -536,9 +553,61 @@ export const Main = () => {
             </Space>
           }
           extra={
-            <Button danger size="small" onClick={clearHistory}>
-              清空历史
-            </Button>
+            <Space>
+              <Button
+                size="small"
+                onClick={() => {
+                  try {
+                    const json = exportHistoryAsJSON(history)
+                    const blob = new Blob([json], {
+                      type: 'application/json;charset=utf-8',
+                    })
+                    const url = URL.createObjectURL(blob)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = `divination-history-${Date.now()}.json`
+                    a.click()
+                    URL.revokeObjectURL(url)
+                    trackEvent('HistoryExported', {
+                      format: 'json',
+                      count: history.length,
+                    })
+                    message.success('已导出 JSON')
+                  } catch {
+                    message.error('导出 JSON 失败')
+                  }
+                }}>
+                导出 JSON
+              </Button>
+              <Button
+                size="small"
+                onClick={() => {
+                  try {
+                    const csv = exportHistoryAsCSV(history)
+                    const blob = new Blob([csv], {
+                      type: 'text/csv;charset=utf-8',
+                    })
+                    const url = URL.createObjectURL(blob)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = `divination-history-${Date.now()}.csv`
+                    a.click()
+                    URL.revokeObjectURL(url)
+                    trackEvent('HistoryExported', {
+                      format: 'csv',
+                      count: history.length,
+                    })
+                    message.success('已导出 CSV')
+                  } catch {
+                    message.error('导出 CSV 失败')
+                  }
+                }}>
+                导出 CSV
+              </Button>
+              <Button danger size="small" onClick={clearHistory}>
+                清空历史
+              </Button>
+            </Space>
           }
           style={{ marginTop: 24 }}>
           <List

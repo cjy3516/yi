@@ -103,3 +103,52 @@ const getGeneralChangeLineAdvice = (changeLine: number): string => {
 
   return advices[changeLine] || '此爻有变化，需要关注'
 }
+
+/**
+ * 导出为 JSON 字符串
+ */
+export const exportHistoryAsJSON = (results: DivinationResult[]): string => {
+  return JSON.stringify(
+    results.map((r) => ({
+      ...r,
+      timestamp:
+        r.timestamp instanceof Date ? r.timestamp.toISOString() : r.timestamp,
+    })),
+    null,
+    2
+  )
+}
+
+/**
+ * 导出为 CSV（UTF-8，无 BOM）
+ */
+export const exportHistoryAsCSV = (results: DivinationResult[]): string => {
+  const headers = [
+    'id',
+    'timestamp',
+    'lowerTrigram',
+    'upperTrigram',
+    'hexagram',
+    'changeLine',
+  ]
+  const lines = results.map((r) => {
+    const row = [
+      r.id,
+      r.timestamp instanceof Date
+        ? r.timestamp.toISOString()
+        : String(r.timestamp),
+      r.lowerTrigram,
+      r.upperTrigram,
+      r.hexagram,
+      String(r.changeLine),
+    ]
+    return row.map(escapeCSVCell).join(',')
+  })
+  return [headers.join(','), ...lines].join('\n')
+}
+
+const escapeCSVCell = (value: string): string => {
+  const needsQuote = /[",\n]/.test(value)
+  const escaped = value.replace(/"/g, '""')
+  return needsQuote ? `"${escaped}"` : escaped
+}
